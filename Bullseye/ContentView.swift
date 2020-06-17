@@ -22,6 +22,9 @@ struct ContentView: View {
             // Target row
             HStack {
                 Text("Put the bullseyes as close as you can to:")
+                    .foregroundColor(Color.white)
+                    .shadow(color: Color.black, radius: 5, x: 2, y: 2)
+                    .font(Font.custom("Arial Rounded MT Bold", size: 18))
                 Text("\(target)")
             }
             Spacer()
@@ -53,7 +56,9 @@ struct ContentView: View {
             // Score row
             HStack {
                 HStack {
-                    Button(action: {}) {
+                    Button(action: {
+                        self.startNewGame()
+                    }) {
                         Text("Start over")
                     }
                     Spacer()
@@ -69,6 +74,9 @@ struct ContentView: View {
                 }
                 .padding(.bottom, 20)
             }
+            .background(Image("Background"), alignment: .bottom)
+        
+        
         }
     }
     
@@ -83,7 +91,17 @@ struct ContentView: View {
     
     
     func pointsForCurrentRound() -> Int {
-        100 - amountOff()
+        let maximumScore = 100
+        let difference = amountOff()
+        let bonus: Int
+        if difference == 0 {
+            bonus = 100
+        } else if difference == 1 {
+            bonus = 50
+        } else {
+            bonus = 0
+        }
+        return maximumScore - difference + bonus
     }
     
     func alertTitle() -> String {
@@ -101,6 +119,14 @@ struct ContentView: View {
         return title
                 
             }
+    
+    func startNewGame() {
+        score = 0
+        round = 1
+        sliderValue = 50.0
+        target = Int.random(in: 1...100)
+    }
+    
         }
 
 struct ContentView_Previews: PreviewProvider {
