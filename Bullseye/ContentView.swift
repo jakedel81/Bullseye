@@ -16,23 +16,29 @@ struct ContentView: View {
     @State var score = 0
     @State var round = 1
     
+    struct labelStyle: ViewModifier {
+        func body(content: Content) -> some View {
+            return content
+            .foregroundColor(Color.white)
+            .shadow(color: Color.black, radius: 5, x: 2, y: 2)
+            .font(Font.custom("Arial Rounded MT Bold", size: 18))        }
+    }
+    
     var body: some View {
         VStack {
             Spacer()
             // Target row
             HStack {
-                Text("Put the bullseyes as close as you can to:")
-                    .foregroundColor(Color.white)
-                    .shadow(color: Color.black, radius: 5, x: 2, y: 2)
-                    .font(Font.custom("Arial Rounded MT Bold", size: 18))
+                Text("Put the bullseyes as close as you can to:").modifier(labelStyle())
                 Text("\(target)")
             }
             Spacer()
             // Slider row
             HStack{
-                Text("1")
+                Text("1").modifier(labelStyle())
                 Slider(value: $sliderValue, in: 1...100)
-                Text("100")
+                Text("100").modifier(labelStyle())
+                
             }
             Spacer()
             // Button row
@@ -62,11 +68,11 @@ struct ContentView: View {
                         Text("Start over")
                     }
                     Spacer()
-                        Text("Score:")
-                        Text("\(score)")
+                    Text("Score:").modifier(labelStyle())
+                    Text("\(score)")
                     Spacer()
-                        Text("Round:")
-                        Text("\(round)")
+                        Text("Round:").modifier(labelStyle())
+                    Text("\(round)")
                     Spacer()
                         Button(action: {}) {
                           Text("Info")
