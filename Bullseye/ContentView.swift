@@ -16,7 +16,7 @@ struct ContentView: View {
     @State var score = 0
     @State var round = 1
     
-    struct labelStyle: ViewModifier {
+    struct LabelStyle: ViewModifier {
         func body(content: Content) -> some View {
             return content
             .foregroundColor(Color.white)
@@ -24,20 +24,28 @@ struct ContentView: View {
             .font(Font.custom("Arial Rounded MT Bold", size: 18))        }
     }
     
+    struct ValueStyle: ViewModifier {
+        func body(content: Content) -> some View {
+            return content
+            .foregroundColor(Color.yellow)
+            .shadow(color: Color.black, radius: 5, x: 2, y: 2)
+            .font(Font.custom("Arial Rounded MT Bold", size: 24))        }
+    }
+    
     var body: some View {
         VStack {
             Spacer()
             // Target row
             HStack {
-                Text("Put the bullseyes as close as you can to:").modifier(labelStyle())
-                Text("\(target)")
+                Text("Put the bullseyes as close as you can to:").modifier(LabelStyle())
+                Text("\(target)").modifier(ValueStyle())
             }
             Spacer()
             // Slider row
             HStack{
-                Text("1").modifier(labelStyle())
+                Text("1").modifier(LabelStyle())
                 Slider(value: $sliderValue, in: 1...100)
-                Text("100").modifier(labelStyle())
+                Text("100").modifier(LabelStyle())
                 
             }
             Spacer()
@@ -68,10 +76,10 @@ struct ContentView: View {
                         Text("Start over")
                     }
                     Spacer()
-                    Text("Score:").modifier(labelStyle())
+                    Text("Score:").modifier(LabelStyle())
                     Text("\(score)")
                     Spacer()
-                        Text("Round:").modifier(labelStyle())
+                        Text("Round:").modifier(LabelStyle())
                     Text("\(round)")
                     Spacer()
                         Button(action: {}) {
